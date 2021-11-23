@@ -2,24 +2,23 @@ namespace SpriteKind {
     export const box = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.box, function (sprite, otherSprite) {
-    if (mySprite.x < mySprite2.x && controller.dx() > 0) {
-        mySprite2.x += 2
+    if (mySprite.x < otherSprite.x && controller.dx() > 0) {
+        otherSprite.x += 2
         mySprite.x += -2
     }
-    if (mySprite.x > mySprite2.x && controller.dx() < 0) {
-        mySprite2.x += -2
+    if (mySprite.x > otherSprite.x && controller.dx() < 0) {
+        otherSprite.x += -2
         mySprite.x += 2
     }
-    if (mySprite.y < mySprite2.y && controller.dy() > 0) {
-        mySprite2.y += 2
+    if (mySprite.y < otherSprite.y && controller.dy() > 0) {
+        otherSprite.y += 2
         mySprite.y += -2
     }
-    if (mySprite.y > mySprite2.y && controller.dy() < 0) {
-        mySprite2.y += -2
+    if (mySprite.y > otherSprite.y && controller.dy() < 0) {
+        otherSprite.y += -2
         mySprite.y += 2
     }
 })
-let mySprite2: Sprite = null
 let mySprite: Sprite = null
 mySprite = sprites.create(img`
     . . . . . . f f f f . . . . . . 
@@ -42,7 +41,7 @@ mySprite = sprites.create(img`
 mySprite.setPosition(30, 25)
 controller.moveSprite(mySprite)
 tiles.setTilemap(tilemap`レベル1`)
-mySprite2 = sprites.create(img`
+let mySprite2 = sprites.create(img`
     b b b b b b b b b b b b b b b b 
     b c b c 6 6 6 6 6 6 6 6 c b c b 
     b b c 6 6 6 6 6 6 6 6 6 6 c b b 
@@ -60,3 +59,27 @@ mySprite2 = sprites.create(img`
     b c b b b b b b b b b b b b c b 
     b b b b b b b b b b b b b b b b 
     `, SpriteKind.box)
+let mySprite3 = sprites.create(img`
+    . . . . . b b b b b b . . . . . 
+    . . . b b 9 9 9 9 9 9 b b . . . 
+    . . b b 9 9 9 9 9 9 9 9 b b . . 
+    . b b 9 d 9 9 9 9 9 9 9 9 b b . 
+    . b 9 d 9 9 9 9 9 1 1 1 9 9 b . 
+    b 9 d d 9 9 9 9 9 1 1 1 9 9 9 b 
+    b 9 d 9 9 9 9 9 9 1 1 1 9 9 9 b 
+    b 9 3 9 9 9 9 9 9 9 9 9 1 9 9 b 
+    b 5 3 d 9 9 9 9 9 9 9 9 9 9 9 b 
+    b 5 3 3 9 9 9 9 9 9 9 9 9 d 9 b 
+    b 5 d 3 3 9 9 9 9 9 9 9 d d 9 b 
+    . b 5 3 3 3 d 9 9 9 9 d d 5 b . 
+    . b d 5 3 3 3 3 3 3 3 d 5 b b . 
+    . . b d 5 d 3 3 3 3 5 5 b b . . 
+    . . . b b 5 5 5 5 5 5 b b . . . 
+    . . . . . b b b b b b . . . . . 
+    `, SpriteKind.Player)
+mySprite3.setPosition(126, 86)
+forever(function () {
+    if (mySprite2.x == mySprite3.x) {
+        game.over(true)
+    }
+})
